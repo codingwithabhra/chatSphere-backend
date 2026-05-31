@@ -16,15 +16,15 @@ const io = new Server(server, {
   cors: {
     origin: "https://chat-sphere-nine-cyan.vercel.app",
     methods: ["GET", "POST"],
-    credentials: true
-  }
+    credentials: true,
+  },
 });
 
 // Middleware
 app.use(cors({
   origin: "https://chat-sphere-nine-cyan.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  credentials: true,
 }));
 
 app.use(express.json());
@@ -34,6 +34,10 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => console.log(error));
 
 app.use("/auth", authRoutes);
+
+app.get("/", (req, res) => {
+  res.send("ChatSphere backend is running 🚀");
+});
 
 // socket io logic
 io.on("connection", (socket) => {
